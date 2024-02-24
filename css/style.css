@@ -5,7 +5,7 @@
 }
 
 .game-board {
-    width: 100%;
+    width: 80%;
     height: 500px;
     border-bottom: 15px solid greenyellow;
     margin: 0 auto;
@@ -17,9 +17,9 @@
 .pipe {
     position: absolute;
     /*so the elements cant interfer with one another*/
-    width: 80px;
+    width: 70px;
     bottom: 0;
-    animation: pipe-animation 1.3s infinite linear;
+    animation: pipe-animation 2s infinite linear;
 }
 
 @keyframes pipe-animation {
@@ -33,9 +33,10 @@
 }
 
 .mario {
+    height: 120px;
     width: 150px;
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
 }
 
 .jump {
@@ -86,4 +87,29 @@
     to {
         right: 100%;
     }
+}
+
+.bird {
+    position: absolute;
+    width: 100px;
+    bottom: 60px;
+    animation: bird-animation 2s infinite linear;
+}
+
+@keyframes bird-animation {
+    from {
+        right: -80px;
+    }
+
+    to {
+        right: 100%;
+    }
+}
+
+.lower {
+    position: absolute;
+    bottom: 0;
+    width: 60px;
+    height: 70px;
+    margin-left: 60px;
 }
