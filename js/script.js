@@ -43,7 +43,7 @@ const lower = () => {
 const restoreImage = () => {
     if (gameOver) return; // Check if the game is in "game over" state
     mario.src = 'images/mario.gif';
-    mario.style.width = ''; // Remove width style to revert to default
+    mario.style.width = '150'; // Remove width style to revert to default
     mario.style.marginLeft = ''; // Remove margin style to revert to default
     const marioImageSrc = mario.src;
 };
@@ -52,9 +52,20 @@ const loop = setInterval(() => {
     const birdPosition = bird.offsetLeft;
     const pipePosition = pipe.offsetLeft;
     const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
+    console.log(marioPosition);
     const marioImageSrc = mario.src;
 
-    if ((pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) || (birdPosition <= 120 && birdPosition > 0 && marioImageSrc.endsWith('images/mario.gif')) || (birdPosition <= 120 && birdPosition > 0 && marioPosition < 130 && !marioImageSrc.endsWith('images/mario-lower.png'))) {
+    // Collision detection with pipes
+    const pipeCollision = pipePosition <= 120 && pipePosition > 0 && marioPosition < 80;
+
+    // Collision detection with birds when Mario is not lowered
+    const birdCollision = birdPosition <= 120 && birdPosition > 0 && marioImageSrc.endsWith('images/mario.gif');
+
+    // Collision detection with birds when Mario is lowered
+    const birdLowerCollision = birdPosition <= 120 && birdPosition > 0 && marioPosition < 130 && !marioImageSrc.endsWith('images/mario-lower.png');
+
+    // Check for collisions with pipes or birds
+    if (pipeCollision || birdCollision || birdLowerCollision) {
         pipe.style.animation = 'none';
         pipe.style.left = `${pipePosition}px`;
         bird.style.animation = 'none';
@@ -68,9 +79,9 @@ const loop = setInterval(() => {
         mario.style.marginLeft = '50px';
 
         clearInterval(loop);
-        gameOverFunction(); // Calls the function to indicate the game is over
+        gameOverFunction();
     }
-}, 100);
+}, 10);
 
 document.addEventListener('keydown', function (event) {
     // Check if the pressed key is the up arrow key ("ArrowUp" code)
@@ -112,5 +123,4 @@ setInterval(toggleElement, 2000); // Every 2 seconds
 // Function to indicate the game is over
 function gameOverFunction() {
     gameOver = true;
-    clearInterval(intervalId); // Stops the image switching
 }
